@@ -9,10 +9,10 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
 }))
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended: true, limit:"16kb"}))
-app.use(express.static("public"))
-app.use(cookieParser())
+app.use(express.json({limit: "16kb"}))  // when json data is recieved this middleware is used 
+app.use(express.urlencoded({extended: true, limit:"16kb"}))  // this converts url data into server understandable 
+app.use(express.static("public"))   //  some temp file storing (public assets) middleware
+app.use(cookieParser())     // just a cookie parser
 
 
 // routes imports 
