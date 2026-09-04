@@ -18,7 +18,7 @@ app.use(cookieParser())     // just a cookie parser
 // routes imports 
 import userRouter from "./routes/user.routes.js";
 
-// routes declaration
+// routes declaration // "use" is a middleware here
 app.use("/api/v1/users", userRouter)
 
 export {app}
