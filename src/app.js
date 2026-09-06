@@ -4,6 +4,10 @@ import cors from "cors";
 
 const app = express();
 
+app.get("/", (req, res) => {
+    res.status(200).send("Server is ready 🚀");
+});
+
 // use is used for configure and middlewares
 app.use(cors({
     origin: process.env.CORS_ORIGIN,

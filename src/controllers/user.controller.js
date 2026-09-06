@@ -1,5 +1,5 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import ApiError from "../utils/ApiError.js"
+import {ApiError} from "../utils/ApiError.js"
 import {User} from "../models/user.models.js"
 import {uploadOnCloudinary} from "../utils/Cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -20,10 +20,6 @@ const registerUser = asyncHandler(async (req,res)=> {
 // check for user creation
 // return response
 
-    res.status(200).json({
-        message: "ok"
-    })
-
 const {fullName, email, username, password} = req.body  // the info is coming from form (f o r m) or body / its not from URL
 console.log(`email is ${email}`)
 console.log(`username is ${username}`)
@@ -42,7 +38,7 @@ console.log(`username is ${username}`)
         })
     ){ throw new ApiError(400,"All fields are Required")}
 
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [ {email} , {username} ]       // some typa shit here bro $or is a special keyword here which checks the given things same or not in DB
     })
 
@@ -53,7 +49,7 @@ console.log(`username is ${username}`)
     // file management (coverImage and avatar)
 
     const avatarLoaclPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.file?.coverImage[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     if(!avatarLoaclPath){
         throw new ApiError(400,"Avatar file is required")
