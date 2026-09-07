@@ -49,11 +49,17 @@ console.log(`username is ${username}`)
     // file management (coverImage and avatar)
 
     const avatarLoaclPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;      // this shit didnt worked
+    // this was to check the cover Image is uploaded or not, if not uploaded then it should return ""
 
     if(!avatarLoaclPath){
         throw new ApiError(400,"Avatar file is required")
     }
+
+    let coverImageLocalPath;
+    if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.lenght > 0){
+        coverImageLocalPath = req.files.coverImage[0].path
+    }   // this is classical code
 
     const avatar = await uploadOnCloudinary(avatarLoaclPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
@@ -72,7 +78,7 @@ console.log(`username is ${username}`)
         username : username.toLowerCase()
     })
 
-    const createdUser = await User.findById(user._id).select(
+    const createdUser = await User.findById(user._id).select(       // this sh*t of code is something bro
         "-password -refreshToken"
     )
 
